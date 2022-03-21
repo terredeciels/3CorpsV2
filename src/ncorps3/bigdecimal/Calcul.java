@@ -1,27 +1,22 @@
 package ncorps3.bigdecimal;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 
-class Calcul {
+import static java.lang.Math.random;
 
+public class Calcul implements Parametres {
 
-    public Calcul(Initialisation init) {
-        BigDecimal Gm = init.Gm;
-        Corps[][] ncorps = init.NCorpsT0;
-        BigDecimal pas = init.pas;
-        int scale = 12;
-        int precision = 12;
-        MathContext mc = new MathContext(precision);
-        RoundingMode rnd = RoundingMode.HALF_DOWN;
-        for (int k = 0; k < init.Tmax - 1; k++) {
+    public final Corps[][] ncorps;
 
+    public Calcul() {
+        initialisation();
+        ncorps = NCorpsT0;
+        for (int k = 0; k < Tmax - 1; k++)
             for (int n = 0; n < 3; n++) { //corps n
                 BigDecimal fx = new BigDecimal("0.0");
                 BigDecimal fy = new BigDecimal("0.0");
                 BigDecimal fz = new BigDecimal("0.0");
-                for (int m = 0; m < 3; m++) {
+                for (int m = 0; m < 3; m++)
                     if (n != m) {
 
                         BigDecimal dx = ncorps[n][k].param[0].subtract(ncorps[m][k].param[0]);
@@ -53,12 +48,17 @@ class Calcul {
                         Corps corps = new Corps();
                         corps.param = param;
                         ncorps[n][k + 1] = corps;
-
                     }
-                }
             }
+    }
 
-
+    private void initialisation() {
+        for (int n = 0; n < NbCorps; n++) {
+            Corps corps = new Corps();
+            BigDecimal[] param = new BigDecimal[6];
+            for (int c = 0; c < 6; c++) param[c] = new BigDecimal(random() * DimXYZ);
+            corps.param = param;
+            NCorpsT0[n][0] = corps;
         }
     }
 }
