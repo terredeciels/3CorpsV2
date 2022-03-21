@@ -48,23 +48,40 @@ public class Launch {
         }
     }
 
-    private static void toFile() throws IOException {
-        Corps[][] I = init.NCorpsT0;
-        for (int i = 0; i < Tmax; i++) {
-            for (int n = 0; n < 3; n++) {
-                BigDecimal[] param = I[n][i].param;
-                W.write(param[0]);
-                W.write(";");
-                W.write(param[1]);
-                W.write(";");
-                W.write(param[2]);
-                W.write(";");
-            }
-            W.write("\n");
-        }
 
-    }
-//    private static void print(Initialisation init) {
+//    private static void toFile(int coord) throws IOException {
+//        // Xcorps1 Xcorps2 Xcorps3  -> t=0
+//        // ....
+//        // Xcorps1 Xcorps2 Xcorps3  -> t=Tmax
+//        Corps[][] I = init.NCorpsT0;
+//        for (int i = 0; i < Tmax; i++) {
+//            for (int j = 0; j < 3; j++) {
+//                W.write(I[j][i].param[coord]);W.write(";");
+//            }
+//            W.write("\n");
+//        }
+//    }
+
+
+//
+//    private static void toFile() throws IOException {
+//        Corps[][] I = init.NCorpsT0;
+//        for (int i = 0; i < Tmax; i++) {
+//            for (int n = 0; n < 3; n++) {
+//                BigDecimal[] param = I[n][i].param;
+//                W.write(param[0]);
+//                W.write(";");
+//                W.write(param[1]);
+//                W.write(";");
+//                W.write(param[2]);
+//                W.write(";");
+//            }
+//            W.write("\n");
+//        }
+//
+//    }
+
+    //    private static void print(Initialisation init) {
 //        Corps[][] I = init.NCorpsT0;
 //        for (int i = 0; i < Tmax; i++) {
 //            for (int n = 0; n < 3; n++) {
