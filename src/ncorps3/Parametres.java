@@ -1,4 +1,4 @@
-package ncorps3.bigdecimal;
+package ncorps3;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -16,7 +16,7 @@ public interface Parametres {
     MathContext mc = new MathContext(precision);
     RoundingMode rnd = RoundingMode.HALF_DOWN;
 
-    Corps[][] NCorpsT0 = new Corps[3][Tmax];
+    Calcul3Corps.Corps[][] NCorpsT0 = new Calcul3Corps.Corps[3][Tmax];
 
     String pathname = "C:\\Users\\gille\\IdeaProjects\\3 Corps V2\\";
     String filename = "3corpsX";

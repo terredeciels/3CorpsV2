@@ -1,14 +1,14 @@
-package ncorps3.bigdecimal;
+package ncorps3;
 
 import java.math.BigDecimal;
 
 import static java.lang.Math.random;
 
-public class Calcul implements Parametres {
+public class Calcul3Corps implements Parametres {
 
     public final Corps[][] ncorps;
 
-    public Calcul() {
+    public Calcul3Corps() {
         initialisation();
         ncorps = NCorpsT0;
         for (int k = 0; k < Tmax - 1; k++)
@@ -60,6 +60,16 @@ public class Calcul implements Parametres {
             corps.param = param;
             NCorpsT0[n][0] = corps;
         }
+    }
+
+    public class Corps {
+
+        public BigDecimal[] param;
+
+        public Corps() {
+            param = new BigDecimal[6];
+        }
+
     }
 }
 
