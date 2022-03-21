@@ -38,6 +38,7 @@ public class Main implements Parametres {
         public WriteToFile(String pathname, String filename) throws IOException {
             File toFile = new File(pathname + filename);
             boolean existe = toFile.createNewFile();
+            if (existe) System.out.println("Le fichier existe");
             writter = new FileWriter(filename);
         }
 

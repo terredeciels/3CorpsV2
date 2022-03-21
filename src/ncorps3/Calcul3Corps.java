@@ -62,7 +62,7 @@ public class Calcul3Corps implements Parametres {
         }
     }
 
-    public class Corps {
+    public static class Corps {
 
         public BigDecimal[] param;
 
