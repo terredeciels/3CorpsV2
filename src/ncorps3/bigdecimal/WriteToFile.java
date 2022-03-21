@@ -15,7 +15,6 @@ public class WriteToFile {
         // else System.out.println("Le fichier existe");
         boolean existe = toFile.createNewFile();
         writter = new FileWriter(filename);
-
         // writter.close();
         // System.out.println("Succes");
     }
