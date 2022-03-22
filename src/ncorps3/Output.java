@@ -10,40 +10,54 @@ import java.math.BigDecimal;
 
 import static java.awt.image.Raster.createInterleavedRaster;
 
-public class Main implements Parametres {
+public class Output implements Parametres{
 
-    private static Calcul3Corps calculs;
-    private static boolean[][] coord;
+    private final boolean[][] coord;
+    private final Calcul3Corps calculs;
+    private  WriteToFile W;
 
-    public static void main(String[] argv) throws IOException {
 
+    public Output() throws IOException {
         calculs = new Calcul3Corps();
-        WriteToFile W;
-        for (int coord = 0; coord < NbCorps; coord++) {
-            W = new WriteToFile(pathname, filename + coord + ".txt");
-            toFile(calculs, W, coord);
+
+        for (int ncoord = 0; ncoord < NbCorps; ncoord++) {
+            W = new WriteToFile(pathname, filename1 + ncoord + ".txt");
+            toFile(ncoord);
             W.writter.close();
         }
         coord = new boolean[DimXYZ][DimXYZ];
         for (int k = 0; k < Tmax; k++) {
             convert3DTo2DToInt(k);
         }
-
+        for (int numcorps = 0; numcorps < NbCorps; numcorps++) {
+            W = new WriteToFile(pathname, filename2 + numcorps + ".txt");
+            toFile2(numcorps);
+            W.writter.close();
+        }
         image(preimg());
     }
 
-    private static void toFile(Calcul3Corps calculs, WriteToFile W, int coord) throws IOException {
+    void toFile(int ncoord) throws IOException {
         Calcul3Corps.Corps[][] I = calculs.ncorps;
-        for (int i = 0; i < Tmax; i++) {
-            for (int j = 0; j < 3; j++) {
-                W.write(I[j][i].param[coord]);
+        for (int t = 0; t < Tmax; t++) {
+            for (int n = 0; n < NbCorps; n++) {
+                W.write(I[n][t].param[ncoord]);
                 W.write(";");
             }
             W.write("\n");
         }
     }
-
-    private static void convert3DTo2DToInt(int k) {
+    void toFile2(int numcorps) throws IOException {
+        Calcul3Corps.Corps[][] I = calculs.ncorps;
+        for (int t = 0; t < Tmax; t++) {
+            for (int c = 0; c < 3; c++) {
+                W.write(I[numcorps][t].param[c]);
+                if(c!=2) W.write(";");
+            }
+            W.write("\n");
+        }
+    }
+    void convert3DTo2DToInt(int k) {
         Calcul3Corps.Corps[][] I = calculs.ncorps;
 
         for (int n = 0; n < NbCorps; n++) {
@@ -60,7 +74,7 @@ public class Main implements Parametres {
 
     }
 
-    private static byte[] preimg() {
+    byte[] preimg() {
         byte[] preimg = new byte[3 * DimXYZ * DimXYZ];
         int k = 0;
         for (int i = 0; i < DimXYZ; i++) {
@@ -81,7 +95,7 @@ public class Main implements Parametres {
         return preimg;
     }
 
-    private static void image(byte[] preimg) throws IOException {
+    void image(byte[] preimg) throws IOException {
         int width = DimXYZ;
 
         DataBuffer buffer = new DataBufferByte(preimg, preimg.length);

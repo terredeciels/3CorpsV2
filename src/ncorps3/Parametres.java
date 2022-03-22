@@ -20,6 +20,7 @@ public interface Parametres {
     Calcul3Corps.Corps[][] NCorpsT0 = new Calcul3Corps.Corps[3][Tmax];
 
     String pathname = "C:\\Users\\gille\\IdeaProjects\\3 Corps V2\\";
-    String filename = "3corpsX";
+    String filename1 = "3corpsX";
+    String filename2 = "CorpsN";
 
 }
