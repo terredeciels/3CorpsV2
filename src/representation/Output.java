@@ -1,4 +1,7 @@
-package ncorps3;
+package representation;
+
+import ncorps3.Calcul3Corps;
+import ncorps3.Parametres;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -10,12 +13,11 @@ import java.math.BigDecimal;
 
 import static java.awt.image.Raster.createInterleavedRaster;
 
-public class Output implements Parametres{
+public class Output implements Parametres {
 
     private final boolean[][] coord;
     private final Calcul3Corps calculs;
-    private  WriteToFile W;
-
+    private WriteToFile W;
 
     public Output() throws IOException {
         calculs = new Calcul3Corps();
@@ -47,16 +49,18 @@ public class Output implements Parametres{
             W.write("\n");
         }
     }
+
     void toFile2(int numcorps) throws IOException {
         Calcul3Corps.Corps[][] I = calculs.ncorps;
         for (int t = 0; t < Tmax; t++) {
             for (int c = 0; c < 3; c++) {
                 W.write(I[numcorps][t].param[c]);
-                if(c!=2) W.write(";");
+                if (c != 2) W.write(";");
             }
             W.write("\n");
         }
     }
+
     void convert3DTo2DToInt(int k) {
         Calcul3Corps.Corps[][] I = calculs.ncorps;
 

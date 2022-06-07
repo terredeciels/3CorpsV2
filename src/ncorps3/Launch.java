@@ -1,11 +1,12 @@
 package ncorps3;
 
-import java.io.IOException;
+import representation.ImgNCorps;
 
 public class Launch implements Parametres {
 
-    public static void main(String[] argv) throws IOException {
-        new Output();
+    public static void main(String[] argv) {
+        //new Output();
+        new ImgNCorps();
     }
 
 }

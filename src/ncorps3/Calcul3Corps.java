@@ -1,15 +1,24 @@
 package ncorps3;
 
 import java.math.BigDecimal;
+import java.util.function.Supplier;
+import java.util.stream.IntStream;
 
 import static java.lang.Math.random;
+import static java.util.stream.IntStream.range;
 
 public class Calcul3Corps implements Parametres {
 
+
     public final Corps[][] ncorps;
+    public IntStream INCorps = range(0, NbCorps);
+    static Supplier<IntStream> ICoord = () -> range(0, 3);
+    static Supplier<IntStream> IVit = () -> range(3, 6);
+
 
     public Calcul3Corps() {
-        initialisation();
+        // coord aléatoires, vitesses nulles à t=0
+        INCorps.forEach(Calcul3Corps::init);
         ncorps = NCorpsT0;
         for (int k = 0; k < Tmax - 1; k++)
             for (int n = 0; n < 3; n++) { //corps n
@@ -52,17 +61,14 @@ public class Calcul3Corps implements Parametres {
             }
     }
 
-    private void initialisation() {
-        for (int n = 0; n < NbCorps; n++) {
-            Corps corps = new Corps();
-            BigDecimal[] param = new BigDecimal[6];
-            // coord aléatoires, vitesses nulles
-            for (int c = 0; c < 3; c++) param[c] = new BigDecimal(random() * DimXYZ);
-            for (int c = 3; c < 6; c++) param[c] = new BigDecimal(0);
-            corps.param = param;
-            NCorpsT0[n][0] = corps;
-        }
+
+    private static void init(int n) {
+        Corps corps = new Corps();
+        ICoord.get().forEach(c -> corps.param[c] = new BigDecimal(random() * DimXYZ));
+        IVit.get().forEach(c -> corps.param[c] = new BigDecimal(0));
+        NCorpsT0[n][t0] = corps;
     }
+
 
     public static class Corps {
 
