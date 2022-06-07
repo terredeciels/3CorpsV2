@@ -27,7 +27,7 @@ public class ImgNCorps extends Canvas {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        Color[] tCoul = {new Color(0, 0, 0),new Color(221, 27, 27),new Color(46, 62, 169)};
+        Color[] tCoul = {new Color(0, 0, 0), new Color(221, 27, 27), new Color(46, 62, 169)};
 //        for (int x = 0; x < WIDTH; x += 20) {
 //            for (int y = 0; y < HEIGHT; y += 20) {
 //                g.setColor(coul);
