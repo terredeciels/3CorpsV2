@@ -12,36 +12,24 @@ public class Calcul3Corps implements Parametres {
     public Calcul3Corps() {
         CORPS.get().forEach(Calcul3Corps::init);
         ncorps = NCorpsT0;
-        T.get().forEach(t -> {
-            CORPS.get().forEach(n -> {
-                BigDecimal[] f = {new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0")};
-                CORPS.get().filter(m -> n != m).forEach(m -> {
-                    BigDecimal dx = ncorps[n][t].param[0].subtract(ncorps[m][t].param[0]);
-                    BigDecimal dy = ncorps[n][t].param[1].subtract(ncorps[m][t].param[1]);
-                    BigDecimal dz = ncorps[n][t].param[2].subtract(ncorps[m][t].param[2]);
-                    BigDecimal D = dx.multiply(dx).add(dy.multiply(dy)).add(dz.multiply(dz));
-                    BigDecimal Denom = D.sqrt(mc).pow(3, mc);
-                    f[0] = f[0].add(Gm.multiply(dx.divide(Denom, scale, rnd)));
-                    f[1] = f[1].add(Gm.multiply(dy.divide(Denom, scale, rnd)));
-                    f[2] = f[2].add(Gm.multiply(dz.divide(Denom, scale, rnd)));
-                    BigDecimal[] param = new BigDecimal[6];
-                    param[0] = (new BigDecimal("0.5")).multiply(f[0].multiply(pas.pow(2)))
-                            .add((ncorps[n][t].param[3]).multiply(pas)).add(ncorps[n][t].param[0]);
-                    param[1] = (new BigDecimal("0.5")).multiply(f[1].multiply(pas.pow(2)))
-                            .add((ncorps[n][t].param[4]).multiply(pas)).add(ncorps[n][t].param[1]);
-                    param[2] = (new BigDecimal("0.5")).multiply(f[2].multiply(pas.pow(2)))
-                            .add((ncorps[n][t].param[5]).multiply(pas)).add(ncorps[n][t].param[2]);
-                    param[3] = f[0].multiply(pas).add(ncorps[n][t].param[3]);
-                    param[4] = f[1].multiply(pas).add(ncorps[n][t].param[4]);
-                    param[5] = f[2].multiply(pas).add(ncorps[n][t].param[5]);
-                    Corps corps = new Corps();
-                    corps.param = param;
-                    ncorps[n][t + 1] = corps;
-                });
+        T.get().forEach(t -> CORPS.get().forEach(n -> {
+            BigDecimal[] f = new BigDecimal[]{new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0")};
+            CORPS.get().filter(m -> n != m).forEach(m -> {
+                BigDecimal[] d = new BigDecimal[3];
+                CORPS.get().forEach(i -> d[i] = ncorps[n][t].param[i].subtract(ncorps[m][t].param[i]));
+                BigDecimal D = d[0].multiply(d[0]).add(d[1].multiply(d[1])).add(d[2].multiply(d[2]));
+                BigDecimal Denom = D.sqrt(mc).pow(3, mc);
+                CORPS.get().forEach(i -> f[i] = f[i].add(Gm.multiply(d[i].divide(Denom, scale, rnd))));
 
+                Corps corps = new Corps();
+                CORPS.get().forEach(i -> corps.param[i] = (new BigDecimal("0.5")).multiply(f[i].multiply(pas.pow(2)))
+                        .add((ncorps[n][t].param[i + 3]).multiply(pas)).add(ncorps[n][t].param[i]));
+                CORPS.get().forEach(i -> corps.param[i + 3] = f[i].multiply(pas).add(ncorps[n][t].param[i + 3]));
+
+                ncorps[n][t + 1] = corps;
             });
 
-        });
+        }));
 
     }
 
